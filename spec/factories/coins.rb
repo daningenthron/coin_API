@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :coin do
-    value { 1 }
-    name { "MyString" }
+    value { 5 }
+    name { "Nickel" }
   end
 end
