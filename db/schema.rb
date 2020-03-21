@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_21_053016) do
+ActiveRecord::Schema.define(version: 2020_03_21_063233) do
 
   create_table "admins", force: :cascade do |t|
     t.string "name"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2020_03_21_053016) do
     t.integer "api_key_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "value"
     t.index ["api_key_id"], name: "index_transactions_on_api_key_id"
     t.index ["coin_id"], name: "index_transactions_on_coin_id"
   end
