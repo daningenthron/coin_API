@@ -6,7 +6,7 @@ RSpec.describe 'Coin API', type: :request do
 
   # View all Coins (GET /coins)
   describe 'GET /coins' do
-    before { 'get /coins' }
+    before { get '/coins' }
 
     it 'returns coins' do
       expect(json).not_to be_empty
@@ -20,7 +20,7 @@ RSpec.describe 'Coin API', type: :request do
 
   # Show Coin (GET /coins/:id)
   describe 'GET /coins/:id' do
-    before { "get /coins/#{id}" }
+    before { get "/coins/#{coin_id}" }
 
     context 'when the coin exists' do
       it 'returns the coin' do
@@ -54,7 +54,7 @@ RSpec.describe 'Coin API', type: :request do
       before { post '/coins', params: valid_attributes }
 
       it 'creates a coin' do
-        expect(json['value']).to eq('1')
+        expect(json['value']).to eq(1)
       end
 
       it 'returns status 201' do
@@ -74,21 +74,15 @@ RSpec.describe 'Coin API', type: :request do
           expect(response.body).to match(/not a valid coin value/)
         end
       end
-
-      context 'when value is over 5' do
-        it 'returns an additional message' do
-          expect(response.body).to match(/one coin at a time/)
-        end
-      end
     end
   end
 
   # Update coin attributes (PUT /coins/:id)
-  describe 'PUT /todos/:id' do
+  describe 'PUT /coins/:id' do
     let(:valid_attributes) { { value: 25 } }
 
     context 'when the coin exists' do
-      before { put "/todos/#{id}", params: valid_attributes }
+      before { put "/coins/#{coin_id}", params: valid_attributes }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -100,22 +94,39 @@ RSpec.describe 'Coin API', type: :request do
     end
 
     context 'when the coin does not exist' do
+      before { put "/coins/99", params: { value: 5 } }
+
       it 'returns status 404' do
         expect(response).to have_http_status(404)
       end
 
       it 'returns a not found message' do
         expect(response.body).to match(/Couldn't find Coin/)
-      end 
+      end
     end
   end
 
   # Delete a coin (DELETE /coins/:id)
   describe 'DELETE /coins/:id' do
-    before { delete "/coins/#{id}" }
+    before { delete "/coins/#{coin_id}" }
 
     it 'returns status 204' do
       expect(response).to have_http_status(204)
+    end
+  end
+
+  # View value of all coins (GET /coins/total)
+  describe 'GET /coins/total' do
+    let(:coins) { create_list(:coin, 2, value: 10) }
+
+    before { get '/coins/total' }
+
+    it 'returns the correct total' do
+      expect(response.body).to eq('20')
+    end
+
+    it 'returns status 200' do
+      expect(response).to have_http_status(200)
     end
   end
 end
