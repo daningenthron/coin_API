@@ -1,5 +1,5 @@
 class Coin < ApplicationRecord
-  has_many :transactions
+  has_many :txns
 
   validates_presence_of :value
   validates :value, inclusion: { in: [1, 5, 10, 25],

@@ -1,4 +1,4 @@
-class Transaction < ApplicationRecord
+class Txn < ApplicationRecord
   belongs_to :coin
   belongs_to :api_key
 

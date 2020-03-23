@@ -1,9 +1,13 @@
 class CoinsController < ApplicationController
-  before_action :set_coin, only: [:show, :update, :destroy]
+  before_action :find_coin, only: [:show, :update, :destroy]
 
   def index
     @coins = Coin.all
     json_response(@coins)
+  end
+
+  def show
+    json_response(@coin)
   end
 
   def create
@@ -12,10 +16,6 @@ class CoinsController < ApplicationController
     @coin.name = name_hash[value]
     @coin.save
     json_response(@coin, :created)
-  end
-
-  def show
-    json_response(@coin)
   end
 
   def update
@@ -46,7 +46,7 @@ class CoinsController < ApplicationController
     params.permit(:value, :name)
   end
 
-  def set_coin
+  def find_coin
     @coin = Coin.find(params[:id])
   end
 end

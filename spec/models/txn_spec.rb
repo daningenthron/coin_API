@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Transaction, type: :model do
+RSpec.describe Txn, type: :model do
   describe 'associations' do
     # each transaction has a single coin and a single api key
     it { should belong_to(:coin) }

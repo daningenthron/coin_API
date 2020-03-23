@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :transaction do
+  factory :txn do
     type { "deposit" }
     value { 5 }
     coin_id { nil }

@@ -1,5 +1,6 @@
 class ApiKey < ApplicationRecord
-  has_many :transactions
+  has_many :txns
 
   validates_presence_of :email
+  validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, on: :create }
 end

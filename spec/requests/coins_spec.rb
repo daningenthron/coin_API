@@ -63,16 +63,14 @@ RSpec.describe 'Coin API', type: :request do
     end
 
     context 'when request is invalid' do
-      context 'when value is under 5' do
-        before { post '/coins', params: { value: 4 } }
+      before { post '/coins', params: { value: 4 } }
 
-        it 'returns status 422' do
-          expect(response).to have_http_status(422)
-        end
+      it 'returns status 422' do
+        expect(response).to have_http_status(422)
+      end
 
-        it 'returns a validation failure message' do
-          expect(response.body).to match(/not a valid coin value/)
-        end
+      it 'returns a validation failure message' do
+        expect(response.body).to match(/not a valid coin value/)
       end
     end
   end
@@ -94,7 +92,7 @@ RSpec.describe 'Coin API', type: :request do
     end
 
     context 'when the coin does not exist' do
-      before { put "/coins/99", params: { value: 5 } }
+      before { put '/coins/99', params: valid_attributes }
 
       it 'returns status 404' do
         expect(response).to have_http_status(404)

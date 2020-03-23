@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Coin, type: :model do
   describe 'associations' do
-    it { should have_many(:transactions) }
+    it { should have_many(:txns) }
   end
 
   describe 'validations' do
