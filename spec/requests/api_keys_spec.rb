@@ -53,6 +53,10 @@ RSpec.describe 'Api_Keys API', type: :request do
     context 'when request is valid' do
       before { post '/api_keys', params: valid_attributes }
 
+      it 'returns the record' do
+        expect(json).not_to be(empty)
+      end
+
       it 'creates an api key' do
         expect(json['key_str']).not_to be(nil)
       end
