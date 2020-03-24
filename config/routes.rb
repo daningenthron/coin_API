@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   end
 
   resources :api_keys
+  resources :txns, only: [:index, :show, :create]
 end

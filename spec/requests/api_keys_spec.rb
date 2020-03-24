@@ -1,16 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe 'Api_Keys API', type: :request do
-  let!(:api_keys) { create_list(:api_key, 5) }
+  let!(:api_keys) { create_list(:api_key, 2) }
   let(:api_key_id) { api_keys.first.id }
+  let(:key_str) { api_keys.first.key_str }
+  let(:headers) { { 'X-Api-Key': key_str } }
 
   # View all API keys ( GET /api_keys)
   describe 'GET /api_keys' do
-    before { get '/api_keys' }
+    before { get '/api_keys', headers: headers }
 
     it 'returns API keys' do
       expect(json).not_to be_empty
-      expect(json.size).to eq(5)
+      expect(json.size).to eq(2)
     end
 
     it 'returns status 200' do
@@ -20,7 +22,7 @@ RSpec.describe 'Api_Keys API', type: :request do
 
   # Show API key (GET /api_keys/:id)
   describe 'GET /api_keys/:id' do
-    before { get "/api_keys/#{api_key_id}" }
+    before { get "/api_keys/#{api_key_id}", headers: headers }
 
     context 'when the api key exists' do
       it 'returns the api key' do
@@ -51,10 +53,10 @@ RSpec.describe 'Api_Keys API', type: :request do
     let(:valid_attributes) { { email: Faker::Internet.email } }
 
     context 'when request is valid' do
-      before { post '/api_keys', params: valid_attributes }
+      before { post '/api_keys', params: valid_attributes, headers: headers }
 
       it 'returns the record' do
-        expect(json).not_to be(empty)
+        expect(json).not_to be_empty
       end
 
       it 'creates an api key' do
@@ -71,7 +73,7 @@ RSpec.describe 'Api_Keys API', type: :request do
     end
 
     context 'when request is invalid' do
-      before { post '/api_keys', params: { email: 'bad_email' } }
+      before { post '/api_keys', params: { email: 'bad_email' }, headers: headers }
 
       it 'returns status 422' do
         expect(response).to have_http_status(422)
@@ -88,7 +90,7 @@ RSpec.describe 'Api_Keys API', type: :request do
     let(:valid_attributes) { { admin: true } }
 
     context 'when the api key exists' do
-      before { put "/api_keys/#{api_key_id}", params: valid_attributes }
+      before { put "/api_keys/#{api_key_id}", params: valid_attributes, headers: headers }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -100,7 +102,7 @@ RSpec.describe 'Api_Keys API', type: :request do
     end
 
     context 'when the api key does not exist' do
-      before { put '/api_keys/99', params: valid_attributes }
+      before { put '/api_keys/99', params: valid_attributes, headers: headers }
 
       it 'returns status 404' do
         expect(response).to have_http_status(404)
@@ -114,7 +116,7 @@ RSpec.describe 'Api_Keys API', type: :request do
 
   # Delete an api key (DELETE /api_keys/:id)
   describe 'DELETE /api_keys/:id' do
-    before { delete "/api_keys/#{api_key_id}" }
+    before { delete "/api_keys/#{api_key_id}", headers: headers }
 
     it 'returns status 204' do
       expect(response).to have_http_status(204)

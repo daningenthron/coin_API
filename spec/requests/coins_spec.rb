@@ -1,16 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe 'Coin API', type: :request do
-  let!(:coins) { create_list(:coin, 10) }
+  let!(:coins) { create_list(:coin, 2) }
   let(:coin_id) { coins.first.id }
+  let(:key_str) { api_key.key_str }
+  let!(:api_key) { create(:api_key, key_str: 'test_key') }
+  let(:api_key_id) { api_key.id }
+  let(:headers) { { 'X-Api-Key': key_str } }
 
   # View all Coins (GET /coins)
   describe 'GET /coins' do
-    before { get '/coins' }
+    before { get '/coins', headers: headers }
 
     it 'returns coins' do
       expect(json).not_to be_empty
-      expect(json.size).to eq(10)
+      expect(json.size).to eq(2)
     end
 
     it 'returns status 200' do
@@ -20,7 +24,7 @@ RSpec.describe 'Coin API', type: :request do
 
   # Show Coin (GET /coins/:id)
   describe 'GET /coins/:id' do
-    before { get "/coins/#{coin_id}" }
+    before { get "/coins/#{coin_id}", headers: headers }
 
     context 'when the coin exists' do
       it 'returns the coin' do
@@ -51,7 +55,7 @@ RSpec.describe 'Coin API', type: :request do
     let(:valid_attributes) { { value: 1 } }
 
     context 'when request is valid' do
-      before { post '/coins', params: valid_attributes }
+      before { post '/coins', params: valid_attributes, headers: headers }
 
       it 'creates a coin' do
         expect(json['value']).to eq(1)
@@ -63,7 +67,7 @@ RSpec.describe 'Coin API', type: :request do
     end
 
     context 'when request is invalid' do
-      before { post '/coins', params: { value: 4 } }
+      before { post '/coins', params: { value: 4 }, headers: headers }
 
       it 'returns status 422' do
         expect(response).to have_http_status(422)
@@ -80,7 +84,7 @@ RSpec.describe 'Coin API', type: :request do
     let(:valid_attributes) { { value: 25 } }
 
     context 'when the coin exists' do
-      before { put "/coins/#{coin_id}", params: valid_attributes }
+      before { put "/coins/#{coin_id}", params: valid_attributes, headers: headers }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -92,7 +96,7 @@ RSpec.describe 'Coin API', type: :request do
     end
 
     context 'when the coin does not exist' do
-      before { put '/coins/99', params: valid_attributes }
+      before { put '/coins/99', params: valid_attributes, headers: headers }
 
       it 'returns status 404' do
         expect(response).to have_http_status(404)
@@ -106,7 +110,7 @@ RSpec.describe 'Coin API', type: :request do
 
   # Delete a coin (DELETE /coins/:id)
   describe 'DELETE /coins/:id' do
-    before { delete "/coins/#{coin_id}" }
+    before { delete "/coins/#{coin_id}", headers: headers }
 
     it 'returns status 204' do
       expect(response).to have_http_status(204)
@@ -117,7 +121,7 @@ RSpec.describe 'Coin API', type: :request do
   describe 'GET /coins/total' do
     let(:coins) { create_list(:coin, 2, value: 10) }
 
-    before { get '/coins/total' }
+    before { get '/coins/total', headers: headers }
 
     it 'returns the correct total' do
       expect(response.body).to eq('20')

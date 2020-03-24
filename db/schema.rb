@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_22_225055) do
+ActiveRecord::Schema.define(version: 2020_03_23_162601) do
 
   create_table "admins", force: :cascade do |t|
     t.string "name"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2020_03_22_225055) do
   end
 
   create_table "txns", force: :cascade do |t|
-    t.string "type"
+    t.string "txn_type"
     t.integer "coin_id", null: false
     t.integer "api_key_id", null: false
     t.datetime "created_at", precision: 6, null: false

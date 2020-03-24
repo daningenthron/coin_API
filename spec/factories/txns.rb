@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :txn do
-    type { "deposit" }
+    txn_type { "deposit" }
     value { 5 }
-    coin_id { nil }
-    api_key_id { nil }
+    coin_id { 1 }
+    api_key_id { 1 }
   end
 end

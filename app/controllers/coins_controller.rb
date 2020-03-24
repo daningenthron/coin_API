@@ -11,10 +11,7 @@ class CoinsController < ApplicationController
   end
 
   def create
-    @coin = Coin.create!(coin_params)
-    value = @coin[:value]
-    @coin.name = name_hash[value]
-    @coin.save
+    @coin = Coin.create!(coin_params.merge(name: Coin.coin_name(coin_params)))
     json_response(@coin, :created)
   end
 
@@ -33,14 +30,6 @@ class CoinsController < ApplicationController
   end
 
   private
-
-  def name_hash
-    { 1 => 'penny', 5 => 'nickel', 10 => 'dime', 25 => 'quarter' }
-  end
-
-  def name(value)
-    name_hash[value]
-  end
 
   def coin_params
     params.permit(:value, :name)

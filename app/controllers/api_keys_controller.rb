@@ -11,10 +11,7 @@ class ApiKeysController < ApplicationController
   end
 
   def create
-    @api_key = ApiKey.create!(api_key_params) do
-      @api_key.key_str = create_key
-      @api_key.admin = false
-    end
+    @api_key = ApiKey.create!(api_key_params.merge(key_str: create_key, admin: false))
     json_response(@api_key, :created)
   end
 
