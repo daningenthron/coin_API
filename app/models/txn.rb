@@ -7,7 +7,20 @@ class Txn < ApplicationRecord
                                 message: 'Not a valid transaction type. Please choose deposit or withdrawal.' }
   validates :value, inclusion: { in: [1, 5, 10, 25],
                                  message: '%{value} is not a valid coin value.' }
-  # validates :api_key, presence: true, api_key: true
 
-  attr_accessor :api_key
+  def self.create_deposit(params, auth_key)
+    @coin = Coin.create(value: params['value'], name: Coin.coin_name(params))
+    @txn = Txn.create!(params.merge(coin_id: @coin.id, api_key_id: auth_key.id))
+    @coin.save
+    @txn
+  end
+
+  def self.create_withdrawal(params, auth_key)
+    @coin = Coin.find_by(value: params['value'])
+    if @coin
+      @txn = Txn.create(params.merge(coin_id: @coin.id, api_key_id: auth_key.id))
+      @coin.destroy
+      @txn
+    end
+  end
 end

@@ -1,4 +1,6 @@
 class TxnsController < ApplicationController
+  # API Keys are validated in ApplicationController
+
   def index
     @txns = Txn.all
     json_response(@txns)
@@ -10,15 +12,27 @@ class TxnsController < ApplicationController
   end
 
   def create
-    @coin = Coin.create(value: txn_params['value'], name: Coin.coin_name(txn_params))
-    @txn = Txn.create!(txn_params.merge(coin_id: @coin.id, api_key_id: auth_key.id))
-    @coin.save
-    json_response(@txn)
+    @txn = if deposit
+             Txn.create_deposit(txn_params, auth_key)
+           elsif withdrawal
+             Txn.create_withdrawal(txn_params, auth_key)
+           else
+             Txn.create!(txn_params) # to model for validation handling
+           end
+    @txn ? json_response(@txn) : json_response('Coin could not be found', :unprocessable_entity)
   end
 
   private
 
   def txn_params
-    params.permit(:txn_type, :value, :api_key_id)
+    params.permit(:txn_type, :value)
+  end
+
+  def deposit
+    txn_params['txn_type'] == 'deposit'
+  end
+
+  def withdrawal
+    txn_params['txn_type'] == 'withdrawal'
   end
 end

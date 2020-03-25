@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_162601) do
+ActiveRecord::Schema.define(version: 2020_03_24_184229) do
 
   create_table "admins", force: :cascade do |t|
     t.string "name"
@@ -46,5 +46,4 @@ ActiveRecord::Schema.define(version: 2020_03_23_162601) do
   end
 
   add_foreign_key "txns", "api_keys"
-  add_foreign_key "txns", "coins"
 end
