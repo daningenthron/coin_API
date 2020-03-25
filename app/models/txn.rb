@@ -1,3 +1,5 @@
+require 'pry'
+
 class Txn < ApplicationRecord
   belongs_to :coin, optional: true
   belongs_to :api_key, optional: true
@@ -16,11 +18,17 @@ class Txn < ApplicationRecord
   end
 
   def self.create_withdrawal(params, auth_key)
-    @coin = Coin.find_by(value: params['value'])
+    value = params['value']
+    @coin = Coin.find_by(value: value)
     if @coin
       @txn = Txn.create(params.merge(coin_id: @coin.id, api_key_id: auth_key.id))
+      alert_admins(@coin) if Coin.where(value: value).length <= 4
       @coin.destroy
       @txn
     end
+  end
+
+  def self.alert_admins(coin)
+    AdminEmailJob.perform_later(coin.name)
   end
 end

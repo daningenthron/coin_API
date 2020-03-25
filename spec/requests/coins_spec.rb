@@ -4,7 +4,7 @@ RSpec.describe 'Coin API', type: :request do
   let!(:coins) { create_list(:coin, 2) }
   let(:coin_id) { coins.first.id }
   let(:key_str) { api_key.key_str }
-  let!(:api_key) { create(:api_key, key_str: 'test_key') }
+  let(:api_key) { create(:api_key, key_str: 'test_key') }
   let(:api_key_id) { api_key.id }
   let(:headers) { { 'X-Api-Key': key_str } }
 

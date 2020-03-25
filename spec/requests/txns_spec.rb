@@ -1,8 +1,10 @@
 require 'rails_helper'
 require 'pry'
 
+include ActiveJob::TestHelper
+
 RSpec.describe 'Transaction API', type: :request do
-  let!(:api_key) { create(:api_key, key_str: 'test_key') }
+  let(:api_key) { create(:api_key, key_str: 'test_key') }
   let(:api_key_id) { api_key.id }
   let(:key_str) { api_key.key_str }
   let(:coins) { create_list(:coin, 2, value: 10) }
@@ -104,7 +106,7 @@ RSpec.describe 'Transaction API', type: :request do
 
     # Create a withdrawal
     describe 'POST /txns (withdrawal)' do
-      let(:valid_attributes) { { value: 10, txn_type: 'withdrawal' } }
+      let!(:valid_attributes) { { value: 10, txn_type: 'withdrawal' } }
       let!(:coins) { create_list(:coin, 2, value: 10) }
 
       context 'when the request is valid' do
@@ -132,6 +134,24 @@ RSpec.describe 'Transaction API', type: :request do
 
         it 'returns an error message' do
           expect(response.body).to match(/Coin could not be found/)
+        end
+      end
+
+      context 'when there are less than 4 of a coin' do
+        let(:coins) { create_list(:coin, 4, value: 5, name: 'nickel') }
+        let(:coin) { coins.first }
+        let!(:valid_attributes) { { value: 5, txn_type: 'withdrawal' } }
+
+        before do
+          post '/txns', params: valid_attributes, headers: headers
+        end
+
+        it 'emails an async alert to admins' do
+          allow(AdminEmailJob).to receive(:perform_later)
+
+          Txn.alert_admins(coin)
+
+          expect(AdminEmailJob).to have_received(:perform_later)
         end
       end
     end
