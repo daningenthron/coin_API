@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2020_03_25_233444) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "admins", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -51,8 +54,8 @@ ActiveRecord::Schema.define(version: 2020_03_25_233444) do
 
   create_table "txns", force: :cascade do |t|
     t.string "txn_type"
-    t.integer "coin_id", null: false
-    t.integer "api_key_id", null: false
+    t.bigint "coin_id", null: false
+    t.bigint "api_key_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "value"
