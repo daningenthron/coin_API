@@ -124,7 +124,7 @@ RSpec.describe 'Coin API', type: :request do
     before { get '/coins/total', headers: headers }
 
     it 'returns the correct total' do
-      expect(response.body).to eq('20')
+      expect(JSON.parse(response.body)['meta']['total']).to eq(20)
     end
 
     it 'returns status 200' do

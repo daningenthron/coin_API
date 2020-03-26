@@ -1,5 +1,3 @@
-require 'pry'
-
 class ApiKeysController < ApplicationController
   before_action :find_api_key, only: [:update, :destroy]
 

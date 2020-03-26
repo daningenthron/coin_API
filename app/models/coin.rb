@@ -13,4 +13,8 @@ class Coin < ApplicationRecord
   def self.coin_name(params)
     name_hash[params[:value].to_i]
   end
+
+  def self.total
+    self.sum(:value)
+  end
 end

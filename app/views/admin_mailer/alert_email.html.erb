@@ -6,7 +6,6 @@
   <body>
     <p>Dear Coin-API Admin:</p>
     <p>It's that time again! Coin machines in the system are running low (less than 4 coins total) of the following coin:</p>
-    <%# require 'pry'; binding.pry %>
     <h3><%= @coin[:name].pluralize.camelcase(:upper) %></h3>    
     <p>Please note that we have only <%= Coin.where(name: @coin[:name]).count %> of this type of coin remaining. Please make additional coins available.</p>
     <p>The total value of the coins in our system is currently <%= Coin.sum(:value) %>.</p><br>

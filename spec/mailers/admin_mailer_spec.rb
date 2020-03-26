@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'pry'
 
 RSpec.describe AdminMailer, type: :mailer do
   let(:admins) { create_list(:admin, 2) }
@@ -13,8 +12,7 @@ RSpec.describe AdminMailer, type: :mailer do
         expect(mail.subject).to eq('Notice of coin shortage')
       end
 
-      it 'sends to the correct email list' do        
-      # binding.pry
+      it 'sends to the correct email list' do
         expect(mail.bcc).to eq(bccs)
       end
 

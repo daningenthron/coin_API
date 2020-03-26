@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :coins do
-    get 'total', :on => :collection
+    get '/total', :on => :collection, to: 'coins#total'
   end
 
   resources :api_keys, :admins

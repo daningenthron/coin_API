@@ -3,7 +3,7 @@ class CoinsController < ApplicationController
 
   def index
     @coins = Coin.all
-    json_response(@coins)
+    render json: @coins, :meta => {:total => Coin.total}
   end
 
   def show
@@ -26,7 +26,8 @@ class CoinsController < ApplicationController
   end
 
   def total
-    json_response(Coin.sum(:value))
+    @coins = []
+    render json: @coins, :meta => {:total => Coin.total}
   end
 
   private
