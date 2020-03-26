@@ -1,4 +1,5 @@
-MortgageHippo Coding Challenge: Coin Machine API
+MortgageHippo Coding Challenge: Coin-API
+----------------------------------------
 
 Per the code challenge instructions, Coin-API is a RESTful Rails JSON API that tracks deposit and withdrawal transactions, and maintains a list of admins that can be alerted when coin supplies get low. The README will describe the API endpoints and a few additional steps I took in setting this up.
 
@@ -20,42 +21,38 @@ NOTE: Enter an API key with the request header `X-Api-Key`. The key `test-key` i
 
 Each resource features RESTful GET/POST/PUT/DELETE routes, with the exception of transactions, which does not allow PUT and DELETE calls. Additional calls are detailed below.
 
-* Coins
--------
+1. Coins
+  - GET /coins - View all coins
+  - GET /coins/:id - View a single coin
+  - GET /coins/total - View total value of all coins
+  - POST /coins - Create a new coin (this takes value attribute only, and assigns the name of the coin)
+  - PUT /coins/:id - Update attributes (takes value only, and updates name)
+  - DELETE /coins/:id - Delete a coin from the system
 
-GET /coins - View all coins
-GET /coins/:id - View a single coin
-GET /coins/total - View total value of all coins
-POST /coins - Create a new coin (this takes value attribute only, and assigns the name of the coin)
-PUT /coins/:id - Update attributes (takes value only, and updates name)
-DELETE /coins/:id - Delete a coin from the system
+2. API Keys
+  - GET /api_keys - Shows associated transaction ids
+  - GET /api_keys/:id - Shows associated transaction details
+  - POST /api_keys 
+  - PUT /api_keys/:id
+  - DELETE /api_keys/:id
 
-* API Keys
-----------
-GET /api_keys - Shows associated transaction ids
-GET /api_keys/:id - Shows associated transaction details
-POST /api_keys 
-PUT /api_keys/:id
-DELETE /api_keys/:id
+  Note: GET and PUT will create Admin records if the 'admin' column is true
 
-- GET and PUT will create Admin records if the 'admin' column is true
+3. Admins
 
-* Admins
---------
-GET /admins
-GET /admins/:id
-POST /admins
-PUT /admins/:id
-DELETE /admins/:id
+  - GET /admins
+  - GET /admins/:id
+  - POST /admins
+  - PUT /admins/:id
+  - DELETE /admins/:id
 
-* Transactions
---------------
+4. Transactions
 
-GET /txns - Allows for an api_key_id param to filter by API user (/txns?api_key_id=1)
-GET /txns/:id
-POST /txns - Creates a transaction. Takes two params, txn_type (deposit/withdrawal) and value.
-  - Deposits create a coin
-  - Withdrawals fail if there are no coins of the requested type in the system. If the coin does exist, the first coin of that value is destroyed. Since the transaction contains the coin id, I removed the foreign key constraint so that if a coin is destroyed, the API can still show when it was deposited and withdrawn.
+  - GET /txns - Allows for an api_key_id param to filter by API user (/txns?api_key_id=1)
+  - GET /txns/:id
+  - POST /txns - Creates a transaction. Takes two params, txn_type (deposit/withdrawal) and value.
+    - Deposits create a coin
+    - Withdrawals fail if there are no coins of the requested type in the system. If the coin does exist, the first coin of that value is destroyed. Since the transaction contains the coin id, I removed the foreign key constraint so that if a coin is destroyed, the API can still show when it was deposited and withdrawn.
 
 Mailers
 -------
