@@ -35,7 +35,7 @@ Each resource features RESTful GET/POST/PUT/DELETE routes, with the exception of
 2. API Keys
   - GET /api_keys - Shows associated transaction ids
   - GET /api_keys/:id - Shows associated transaction details
-  - POST /api_keys 
+  - POST /api_keys - Takes email and an admin boolean, and returns a key
   - PUT /api_keys/:id
   - DELETE /api_keys/:id
 
@@ -45,7 +45,7 @@ Each resource features RESTful GET/POST/PUT/DELETE routes, with the exception of
 
   - GET /admins
   - GET /admins/:id
-  - POST /admins
+  - POST /admins - Takes name and email
   - PUT /admins/:id
   - DELETE /admins/:id
 
