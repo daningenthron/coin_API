@@ -25,17 +25,21 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
-group :development, :test do
-  # Display json in json:api format
-  gem 'active_model_serializers'
+# Display json in json:api format
+gem 'active_model_serializers'
 
+# Handles async job queuing without Redis
+gem 'delayed_job', '~> 4.1', '>= 4.1.3'
+gem 'delayed_job_active_record'
+
+gem 'database_cleaner-active_record' # Cleans database for testing and seeding
+gem 'faker' # Fake data for testing and seeding
+
+group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 3.5'
 
-  # Handles async job queuing without Redis
-  gem 'delayed_job', '~> 4.1', '>= 4.1.3'
-  gem 'delayed_job_active_record'
   
   # Another debugging tool to step through code
   gem 'pry', '~> 0.10.4'
@@ -51,10 +55,8 @@ group :development do
 end
 
 group :test do
-  gem 'database_cleaner-active_record' # Cleans database for testing and seeding
-  gem 'shoulda-matchers' # Provides single-line Rspec matchers for validation and association testing
   gem 'factory_bot_rails' # Generates stubbed models for testing
-  gem 'faker' # Fake data for testing and seeding
+  gem 'shoulda-matchers' # Provides single-line Rspec matchers for validation and association testing
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
