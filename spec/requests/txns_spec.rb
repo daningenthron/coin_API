@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'pry'
 
 include ActiveJob::TestHelper
 
@@ -38,7 +37,7 @@ RSpec.describe 'Transaction API', type: :request do
       context 'when the transaction exists' do
         it 'returns the transaction' do
           expect(json).not_to be_empty
-          expect(json['id']).to eq(txn_id)
+          expect(json['id']).to eq('1')
         end
 
         it 'returns status 200' do
@@ -67,11 +66,11 @@ RSpec.describe 'Transaction API', type: :request do
         before { post '/txns', params: valid_attributes, headers: headers }
 
         it 'creates a coin' do
-          expect(json['coin_id']).not_to be_nil
+          expect(json['attributes']['coin-id']).not_to be_nil
         end
 
         it 'creates a transaction' do
-          expect(json['id']).to eq(1)
+          expect(json['id']).to eq('1')
         end
 
         it 'returns status 200' do
@@ -113,11 +112,11 @@ RSpec.describe 'Transaction API', type: :request do
         before { post '/txns', params: valid_attributes, headers: headers }
 
         it 'destroys a coin' do
-          expect(json['coin_id']).to eq(1)
+          expect(json['attributes']['coin-id']).to eq(1)
         end
 
         it 'creates a transaction' do
-          expect(json['id']).to eq(1)
+          expect(json['id']).to eq('1')
         end
 
         it 'returns status 200' do

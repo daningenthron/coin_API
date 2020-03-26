@@ -2,9 +2,11 @@ Dear Coin-API Admin:
 
 It's that time again! Coin machines in the system are running low (less than 4 coins total) of the following coin:
 
-<%= @coin %>
+<%= @coin[:name].pluralize.camelcase(:upper) %>
 
-Please, please make additional currency available.
+Please note that we have only <%= Coin.where(name: @coin[:name]).count %> of this type of coin remaining. Please make additional coins available.
+
+The total value of the coins in our system is currently <%= Coin.sum(:value) %>.
 
 Thank you,
 The Coin-API Team

@@ -27,7 +27,7 @@ RSpec.describe 'Admin API', type: :request do
     before { get "/admins/#{admin_id}", headers: headers }
 
     it 'returns the admin' do
-      expect(json['id']).to eq(admin_id)
+      expect(json['id']).to eq('1')
     end
 
     it 'returns status 200' do
@@ -43,7 +43,7 @@ RSpec.describe 'Admin API', type: :request do
       before { post '/admins', params: valid_attributes, headers: headers }
 
       it 'creates the admin' do
-        expect(json['email']).to eq('email@example.com')
+        expect(json['attributes']['email']).to eq('email@example.com')
       end
 
       it 'returns status 201' do

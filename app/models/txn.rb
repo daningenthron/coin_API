@@ -27,6 +27,6 @@ class Txn < ApplicationRecord
   end
 
   def self.alert_admins(coin)
-    AdminEmailJob.perform_later(coin.name)
+    AdminEmailJob.perform_later(coin)
   end
 end

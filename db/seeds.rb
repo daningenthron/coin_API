@@ -1,10 +1,6 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
 require 'database_cleaner'
 require 'faker'
 
@@ -22,14 +18,14 @@ Admin.create(email: 'ops@coin-api.com')
 Admin.create(name: Faker::Name.name, email: Faker::Internet.email)
 Admin.create(name: Faker::Name.name, email: Faker::Internet.email)
 
-6.times do
+3.times do
   Txn.create_deposit({ txn_type: 'deposit', value: 1 }, ApiKey.first)
+  Txn.create_deposit({ txn_type: 'deposit', value: 5 }, ApiKey.second)
+  Txn.create_deposit({ txn_type: 'deposit', value: 10 }, ApiKey.last)
 end
 
-3.times do
-  Txn.create_deposit({ txn_type: 'deposit', value: 5 }, ApiKey.first)
-  Txn.create_deposit({ txn_type: 'deposit', value: 10 }, ApiKey.second)
-  Txn.create_deposit({ txn_type: 'deposit', value: 25 }, ApiKey.last)
+6.times do
+  Txn.create_deposit({ txn_type: 'deposit', value: 25 }, ApiKey.first)
 end
 
 Txn.create_withdrawal({ txn_type: 'withdrawal', value: 1 }, ApiKey.first)

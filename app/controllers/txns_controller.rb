@@ -2,7 +2,8 @@ class TxnsController < ApplicationController
   # API Keys are validated in ApplicationController
 
   def index
-    @txns = Txn.all
+    api_key_id = params[:api_key_id]
+    @txns = api_key_id ? Txn.where(api_key_id: api_key_id) : @txns = Txn.all
     json_response(@txns)
   end
 

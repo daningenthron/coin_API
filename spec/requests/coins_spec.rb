@@ -29,7 +29,7 @@ RSpec.describe 'Coin API', type: :request do
     context 'when the coin exists' do
       it 'returns the coin' do
         expect(json).not_to be_empty
-        expect(json['id']).to eq(coin_id)
+        expect(json['id']).to eq('1')
       end
 
       it 'returns status 200' do
@@ -58,7 +58,7 @@ RSpec.describe 'Coin API', type: :request do
       before { post '/coins', params: valid_attributes, headers: headers }
 
       it 'creates a coin' do
-        expect(json['value']).to eq(1)
+        expect(json['attributes']['value']).to eq(1)
       end
 
       it 'returns status 201' do

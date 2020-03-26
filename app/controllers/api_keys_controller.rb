@@ -1,7 +1,7 @@
 require 'pry'
 
 class ApiKeysController < ApplicationController
-  before_action :find_api_key, only: [:show, :update, :destroy]
+  before_action :find_api_key, only: [:update, :destroy]
 
   def index
     @api_keys = ApiKey.all
@@ -9,7 +9,8 @@ class ApiKeysController < ApplicationController
   end
 
   def show
-    json_response(@api_key)
+    @api_key = ApiKey.find(params[:id])
+    render json: @api_key, include: ['txns']
   end
 
   def create

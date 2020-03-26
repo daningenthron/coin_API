@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'pry'
 
 RSpec.describe 'Api_Keys API', type: :request do
   let!(:api_keys) { create_list(:api_key, 2) }
@@ -28,7 +27,7 @@ RSpec.describe 'Api_Keys API', type: :request do
     context 'when the api key exists' do
       it 'returns the api key' do
         expect(json).not_to be_empty
-        expect(json['id']).to eq(api_key_id)
+        expect(json['id']).to eq('1')
       end
 
       it 'returns status 200' do
@@ -62,11 +61,11 @@ RSpec.describe 'Api_Keys API', type: :request do
       end
 
       it 'creates an api key' do
-        expect(json['key_str']).not_to be(nil)
+        expect(json['attributes']['key-str']).not_to be(nil)
       end
 
       it 'defaults to non-admin' do
-        expect(json['admin']).to be(false)
+        expect(json['attributes']['admin']).to be(false)
       end
 
       it 'returns status 201' do
