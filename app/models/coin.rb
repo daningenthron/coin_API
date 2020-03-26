@@ -1,4 +1,5 @@
 class Coin < ApplicationRecord
+
   has_many :txns
 
   validates_presence_of :value
@@ -9,7 +10,7 @@ class Coin < ApplicationRecord
     { 1 => 'penny', 5 => 'nickel', 10 => 'dime', 25 => 'quarter' }
   end
 
-  def self.coin_name(coin_params)
-    name_hash[coin_params['value'].to_i]
+  def self.coin_name(params)
+    name_hash[params[:value].to_i]
   end
 end

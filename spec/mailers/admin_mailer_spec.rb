@@ -11,7 +11,7 @@ RSpec.describe AdminMailer, type: :mailer do
       end
 
       it 'sends to the correct email list' do
-        expect(mail.to).to eq(Admin.pluck(:email))
+        expect(mail.bcc).to eq(Admin.pluck(:email))
       end
 
       it 'renders the from email' do

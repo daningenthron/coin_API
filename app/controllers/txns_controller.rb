@@ -25,14 +25,14 @@ class TxnsController < ApplicationController
   private
 
   def txn_params
-    params.permit(:txn_type, :value)
+    params.permit(:txn_type, :value, :api_key_id)
   end
 
   def deposit
-    txn_params['txn_type'] == 'deposit'
+    txn_params[:txn_type] == 'deposit'
   end
 
   def withdrawal
-    txn_params['txn_type'] == 'withdrawal'
+    txn_params[:txn_type] == 'withdrawal'
   end
 end

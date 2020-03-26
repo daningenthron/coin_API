@@ -26,13 +26,21 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # gem 'rack-cors'
 
 group :development, :test do
+  # Display json in json:api format
+  gem 'active_model_serializers'
+
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'factory_bot_rails'
+  gem 'rspec-rails', '~> 3.5'
+
+  # Handles async job queuing without Redis
+  gem 'delayed_job', '~> 4.1', '>= 4.1.3'
+  gem 'delayed_job_active_record'
+  
+  # Another debugging tool to step through code
   gem 'pry', '~> 0.10.4'
   gem 'pry-remote'
   gem 'pry-nav'
-  gem 'rspec-rails', '~> 3.5'
 end
 
 group :development do
@@ -43,9 +51,10 @@ group :development do
 end
 
 group :test do
-  gem 'database_cleaner-active_record'
-  gem 'faker'
-  gem 'shoulda-matchers'
+  gem 'database_cleaner-active_record' # Cleans database for testing and seeding
+  gem 'shoulda-matchers' # Provides single-line Rspec matchers for validation and association testing
+  gem 'factory_bot_rails' # Generates stubbed models for testing
+  gem 'faker' # Fake data for testing and seeding
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

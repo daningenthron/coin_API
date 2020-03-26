@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'pry'
 
 RSpec.describe 'Api_Keys API', type: :request do
   let!(:api_keys) { create_list(:api_key, 2) }
@@ -50,7 +51,8 @@ RSpec.describe 'Api_Keys API', type: :request do
 
   # Create api key (POST /api_keys)
   describe 'POST /api_keys' do
-    let(:valid_attributes) { { email: Faker::Internet.email } }
+    let(:valid_attributes) { { email: Faker::Internet.email, admin: false } }
+    let!(:admins) { create_list(:admin, 2) }
 
     context 'when request is valid' do
       before { post '/api_keys', params: valid_attributes, headers: headers }
@@ -69,6 +71,14 @@ RSpec.describe 'Api_Keys API', type: :request do
 
       it 'returns status 201' do
         expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when admin field is true' do
+      before { post '/api_keys', params: valid_attributes.merge(admin: true), headers: headers }
+
+      it 'adds an admin record' do
+        expect(Admin.count).to eq(3)
       end
     end
 

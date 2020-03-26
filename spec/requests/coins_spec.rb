@@ -119,7 +119,7 @@ RSpec.describe 'Coin API', type: :request do
 
   # View value of all coins (GET /coins/total)
   describe 'GET /coins/total' do
-    let(:coins) { create_list(:coin, 2, value: 10) }
+    let(:coins) { create_list(:coin, 2, value: 10, name: 'dime') }
 
     before { get '/coins/total', headers: headers }
 

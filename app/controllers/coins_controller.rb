@@ -16,7 +16,7 @@ class CoinsController < ApplicationController
   end
 
   def update
-    @coin.update(coin_params)
+    @coin.update(coin_params.merge(name: Coin.coin_name(coin_params)))
     head :no_content
   end
 
@@ -32,7 +32,7 @@ class CoinsController < ApplicationController
   private
 
   def coin_params
-    params.permit(:value, :name)
+    params.permit(:value)
   end
 
   def find_coin
