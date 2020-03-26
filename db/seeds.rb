@@ -1,10 +1,7 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
-require 'database_cleaner'
 require 'faker'
-
-DatabaseCleaner.clean_with :truncation
 
 ApiKey.create(email: 'coins@coin-api.com', key_str: SecureRandom.hex(3), admin: true)
 ApiKey.create(email: 'info@coin-api.com', key_str: SecureRandom.hex(3), admin: true)

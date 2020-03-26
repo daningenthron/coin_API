@@ -1,12 +1,12 @@
 MortgageHippo Coding Challenge: Coin-API
 ----------------------------------------
 
-Per the code challenge instructions, Coin-API is a RESTful Rails JSON API that tracks deposit and withdrawal transactions, and maintains a list of admins that can be alerted when coin supplies get low. The README will describe the API endpoints and a few additional steps I took in setting this up.
+Per the code challenge instructions, Coin-API is a RESTful Rails JSON API built on Postgres that tracks deposit and withdrawal transactions, and maintains a list of admins that can be alerted when coin supplies get low. The README will describe the API endpoints and a few additional steps I took in setting this up.
 
 Gems
 ----
 
-For testing I used RSpec, with Shoulda Matchers for some specs. FactoryBot and Faker generate test and seed data, and Database Cleaner was used for testing and seeding the DB. Active Model Serializers is configured to render the data in the json:api standard, and Delayed Job handles the async email send. I also used Pry for debugging, and enabled Rack-CORS for cross-origin requests.
+For testing I used RSpec, with Shoulda Matchers for some specs. FactoryBot and Faker generate test and seed data. Database Cleaner was used for testing and seeding the DB during development, but was removed from the seeds file for production. Active Model Serializers is configured to render the data in the json:api standard, and Delayed Job handles the async email send. I also used Pry for debugging, and enabled Rack-CORS for cross-origin requests.
 
 Authentication
 --------------

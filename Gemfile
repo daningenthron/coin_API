@@ -32,12 +32,12 @@ gem 'active_model_serializers'
 gem 'delayed_job', '~> 4.1', '>= 4.1.3'
 gem 'delayed_job_active_record'
 
-gem 'database_cleaner-active_record' # Cleans database for testing and seeding
 gem 'faker' # Fake data for testing and seeding
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'database_cleaner-active_record' # Cleans database for testing
   gem 'rspec-rails', '~> 3.5'
 
   
