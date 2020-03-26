@@ -3,8 +3,8 @@ MortgageHippo Coding Challenge: Coin-API
 
 Per the code challenge instructions, Coin-API is a RESTful Rails JSON API built on Postgres that tracks deposit and withdrawal transactions, and maintains a list of admins that can be alerted when coin supplies get low. The README will describe the API endpoints and a few additional steps I took in setting this up.
 
-URL: https://mh-coin-api.herokuapp.com
-Git repo: https://github.com/daningenthron/mortgagehippo_code_challenge
+- URL: https://mh-coin-api.herokuapp.com
+- Git repo: https://github.com/daningenthron/mortgagehippo_code_challenge
 
 Gems
 ----
@@ -61,7 +61,6 @@ Mailers
 -------
 
 A single mailer is sent to all admins when a withdrawal brings the amount of a coin to under 4 of that type. This is generated through Rails by Action Mailer, and scheduled via ActiveJob. For the async send, while Sidekiq is generally faster, setting up a Redis instance does not fit the scale of the project, so I used Delayed Job.
-Preview of the mailer can be viewed at /rails/mailers/admin_mailer/alert_email.html.
 
 Concerns / Helpers
 ------------------
