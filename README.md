@@ -1,10 +1,10 @@
-MortgageHippo Coding Challenge: Coin-API
-----------------------------------------
+Coin-API
+--------
 
-Per the code challenge instructions, Coin-API is a RESTful Rails JSON API built on Postgres that tracks deposit and withdrawal transactions, and maintains a list of admins that can be alerted when coin supplies get low. The README will describe the API endpoints and a few additional steps I took in setting this up.
+Coin-API is a RESTful Rails JSON API built on Postgres that tracks deposit and withdrawal transactions, and maintains a list of admins that can be alerted when coin supplies get low. The README will describe the API endpoints and a few additional steps I took in setting this up.
 
 - URL: https://mh-coin-api.herokuapp.com
-- Git repo: https://github.com/daningenthron/mortgagehippo_code_challenge
+- Git repo: https://github.com/daningenthron/coin_API
 
 Gems
 ----
